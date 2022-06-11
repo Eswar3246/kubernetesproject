@@ -1,10 +1,7 @@
-FROM centos:latest
-MAINTAINER yogeeswar32@gmail.com
-yum install httpd zip unzip -y
-ADD https://https://www.free-css.com/assets/files/free-css-templates/download/page279/grad-school.zip /var/www/html/
-WORKDIR /var/www/html
-RUN unzip grad-school.zip
-RUN cp -rvf grad-school/*
-RUN rm -rf grad-school grad-school.zip
-CMD {"/usr/sbin/httpd", "-D", "FOREGROUND"}
-EXPOSE 80
+cd /opt
+docker image build -t $JOB_NAME:v1.$BUILD_ID .
+docker image tag $JOB_NAME:v1.$BUILD_ID sd171991/$JOB_NAME:v1.$BUILD_ID
+docker image tag $JOB_NAME:v1.$BUILD_ID sd171991/$JOB_NAME:latest
+docker image push sd171991/$JOB_NAME:v1.$BUILD_ID
+docker image push sd171991/$JOB_NAME:latest
+docker image rmi $JOB_NAME:v1.$BUILD_ID sd171991/$JOB_NAME:v1.$BUILD_ID sd171991/$JOB_NAME:latest
